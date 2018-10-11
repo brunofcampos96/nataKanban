@@ -46,6 +46,11 @@ const boards = (props) => {
               <button style={buttonStyle}>Add Card</button>
               <Cards
                 cards={props.cards.filter(card => card.pId === board.id)}
+                color={board.color}
+                deleteCard={props.deleteCard}
+                cardMoveId={props.cardMoveId}
+                moveCard={props.moveCard}
+                boards={props.boards}
               />
           </div>
           <span style={{height:'3px', display:'block', backgroundColor:'white', marginBottom: '10px'}}></span>
@@ -53,9 +58,6 @@ const boards = (props) => {
           <button style={editTitleStyle} onClick={() => props.deleteBoard(board.id)}>Delete</button>
           </div>
         </div>
-          
-
-       
     })
 }
 

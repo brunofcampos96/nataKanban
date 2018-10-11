@@ -6,6 +6,7 @@ class App extends Component {
   state = {
     edittingBoard: null,
     textValue: "",
+    cardMoveId: null,
     boards : [
       {
         id: 1,
@@ -92,7 +93,10 @@ class App extends Component {
             cards={this.state.cards}
             updateInputValue={this.updateInputValue}
             saveTitle={this.saveTitle}
-            deleteBoard={this.deleteBoard}/>
+            deleteBoard={this.deleteBoard}
+            deleteCard={this.deleteCard}
+            cardMoveId={this.state.cardMoveId}
+            moveCard={this.moveCard}/>
         </div>
       </div>
     );
@@ -100,6 +104,10 @@ class App extends Component {
 
   editBoard = (id) => {
     this.setState({edittingBoard: id})
+  }
+
+  moveCard = (id) => {
+    this.setState({cardMoveId: id})
   }
 
   getRandomColor() {
@@ -114,7 +122,7 @@ class App extends Component {
   addBoard(){
     
     let board = {
-      id: this.state.boards.length + 1,
+      id: this.state.boards[this.state.boards.length-1].id + 1,
       title: "Edit",
       color: this.getRandomColor()
     }
@@ -142,6 +150,14 @@ class App extends Component {
     })
     boards.splice(idxToRemove,1);
     this.setState({boards:boards, cards: remaingCards});
+  }
+
+  deleteCard = (id) => {
+    let cards = [...this.state.cards];
+    let remaingCards = cards.filter(card => {
+      return card.id !== id 
+    })
+    this.setState({cards: remaingCards});
   }
 }
 
