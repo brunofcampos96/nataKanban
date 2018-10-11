@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+.cardContent{
+  display: block;
+  text-align: left;
+}
+.cardTitle{
+  display: block;
+  font-weight: bold;
+}
+
+.card{
+  padding: 5px;
+}
