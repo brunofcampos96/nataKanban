@@ -7,3 +7,6 @@
     grid-template-columns: auto;
     grid-column-gap: 2px;
 }
+h3{
+    margin: 5px;
+}

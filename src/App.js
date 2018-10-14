@@ -5,7 +5,7 @@ import Boards from './components/Boards/Boards'
 class App extends Component {
   state = {
     edittingBoard: null,
-    textValue: "",
+    boardTitle: "",
     movingCard: null,
     edittingCard: null,
     cardTitle: "",
@@ -95,7 +95,7 @@ class App extends Component {
             onEditClick={this.editBoard}
             editBoardId={this.state.edittingBoard}
             cards={this.state.cards}
-            updateInputValue={this.updateInputValue}
+            setBoardTitle={this.setBoardTitle}
             saveTitle={this.saveTitle}
             deleteBoard={this.deleteBoard}
             deleteCard={this.deleteCard}
@@ -189,15 +189,19 @@ class App extends Component {
     this.setState({cards: cards, option : null, movingCard : null,  edittingCard: null})
   }
   
-  updateInputValue = (textValue) => {
-    this.setState({textValue : textValue})
+  setBoardTitle = (boardTitle) => {
+    this.setState({boardTitle : boardTitle})
   }
   saveTitle = () => {
-    let boards = [...this.state.boards];
-    boards.find(board => {
-      return board.id === this.state.edittingBoard;
-    }).title = this.state.textValue;
-    this.setState({boards : boards, edittingBoard : null, textValue : ""});
+    if(this.state.boardTitle){
+      let boards = [...this.state.boards];
+      boards.find(board => {
+        return board.id === this.state.edittingBoard;
+      }).title = this.state.boardTitle;
+      this.setState({boards : boards, edittingBoard : null, boardTitle : ""});
+    }else{
+      this.setState({edittingBoard : null, boardTitle : ""});
+    }
   }
 
   deleteBoard = (id) => {

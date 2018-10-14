@@ -18,23 +18,27 @@ const boards = (props) => {
           width: '-webkit-fill-available',
           outline: 'none',
           fontSize: '20px',
-          textAlign: 'center'
+          textAlign: 'center',
+          padding: '6px'
         }
         let editTitleStyle = {
           background: board.color,
           border: 'none',
           outline: 'none',
-          align: 'rigth',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          display: 'block',
+          width: '100%',
+          paddingTop: '7px'
         }
         let title = null;
         if(props.editBoardId === board.id){
-          title = <h3>
-            <input placeholder={board.title} style={titleInputStyle} onChange={evt => props.updateInputValue(evt.target.value)}/>
+          title = <div>
             <button style={editTitleStyle} onClick={() => props.saveTitle(board.id)}>Save</button>
-          </h3>
+            <input placeholder={board.title} style={titleInputStyle} onChange={evt => props.setBoardTitle(evt.target.value)}/>
+          </div>
         }else{
-          title = <h3>{board.title}<button style={editTitleStyle} onClick={() => props.onEditClick(board.id)}>Edit</button></h3>
+          
+          title = <div><button style={editTitleStyle} onClick={() => props.onEditClick(board.id)}>Edit</button><h3>{board.title}</h3></div>
         }
         return <div style={{backgroundColor:board.color}}>
           <div
