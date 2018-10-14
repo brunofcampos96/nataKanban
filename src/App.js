@@ -6,8 +6,12 @@ class App extends Component {
   state = {
     edittingBoard: null,
     textValue: "",
-    cardMoveId: null,
-    boards : [
+    movingCard: null,
+    edittingCard: null,
+    cardTitle: "",
+    cardDescription: "",
+    option: null,
+    boards: [
       {
         id: 1,
         title: "Backlog",
@@ -95,8 +99,16 @@ class App extends Component {
             saveTitle={this.saveTitle}
             deleteBoard={this.deleteBoard}
             deleteCard={this.deleteCard}
-            cardMoveId={this.state.cardMoveId}
-            moveCard={this.moveCard}/>
+            movingCard={this.state.movingCard}
+            setCardIdToMove={this.setCardIdToMove}
+            addCard={this.addCard}
+            moveCard={this.moveCard}
+            setOption={this.setOption}
+            setEdittingCard={this.setEdittingCard}
+            edittingCardId={this.state.edittingCard}
+            setCardTitle={this.setCardTitle}
+            setCardDescription={this.setCardDescription}
+            saveEdit={this.saveEdit}/>
         </div>
       </div>
     );
@@ -106,8 +118,46 @@ class App extends Component {
     this.setState({edittingBoard: id})
   }
 
-  moveCard = (id) => {
-    this.setState({cardMoveId: id})
+  setCardIdToMove = (id) => {
+    this.setState({movingCard: id,  edittingCard: null})
+  }
+
+  setOption = (destinyBoardId) => {
+    this.setState({option : destinyBoardId})
+  }
+
+  setEdittingCard = (cardId) => {
+    this.setState({edittingCard : cardId, cardDescription : null, cardTitle : null, movingCard: null})
+  }
+  
+  setCardTitle = (title) => {
+    this.setState({cardTitle: title})
+  }
+  
+  setCardDescription = (description) => {
+    this.setState({cardDescription: description})
+  }
+  
+  saveEdit = (editCard) => {
+    if(this.state.cardDescription) editCard.description = this.state.cardDescription;
+    if(this.state.cardTitle) editCard.title = this.state.cardTitle;
+
+    let cards = [...this.state.cards];
+    let cardIdx = cards.findIndex(card => card.id === editCard.id);
+    cards[cardIdx] = editCard;
+    this.setState({cards : cards, cardDescription : "", cardTitle : "", edittingCard: null})
+  }
+
+  moveCard = (cardId) => {
+    if(this.state.option){
+      let cards = [...this.state.cards];
+      cards.find(card => {
+        return card.id === cardId;
+      }).pId = parseInt(this.state.option);
+      this.setState({cards : cards, option : null, movingCard : null,  edittingCard: null})
+    }else{
+      this.setState({option : null, movingCard : null,  edittingCard: null})
+    }
   }
 
   getRandomColor() {
@@ -120,7 +170,6 @@ class App extends Component {
   }
   
   addBoard(){
-    
     let board = {
       id: this.state.boards[this.state.boards.length-1].id + 1,
       title: "Edit",
@@ -129,14 +178,24 @@ class App extends Component {
     let boards = [board,...this.state.boards];
     this.setState({boards: boards})
   }
-
+  addCard = (pId) => {
+    let card = {
+      id: this.state.cards[this.state.cards.length-1].id + 1,
+      pId: pId,
+      title: "Edit",
+      description: "Edit"
+    }
+    let cards = [card,...this.state.cards];
+    this.setState({cards: cards, option : null, movingCard : null,  edittingCard: null})
+  }
+  
   updateInputValue = (textValue) => {
     this.setState({textValue : textValue})
   }
   saveTitle = () => {
     let boards = [...this.state.boards];
     boards.find(board => {
-      return board.id == this.state.edittingBoard;
+      return board.id === this.state.edittingBoard;
     }).title = this.state.textValue;
     this.setState({boards : boards, edittingBoard : null, textValue : ""});
   }

@@ -43,15 +43,21 @@ const boards = (props) => {
             >
               {title}
               <span style={{height:'3px', display:'block', backgroundColor:'white'}}></span>
-              <button style={buttonStyle}>Add Card</button>
+              <button style={buttonStyle} onClick={() => props.addCard(board.id)}>Add Card</button>
               <Cards
                 cards={props.cards.filter(card => card.pId === board.id)}
                 color={board.color}
                 deleteCard={props.deleteCard}
-                cardMoveId={props.cardMoveId}
-                moveCard={props.moveCard}
+                movingCard={props.movingCard}
+                setCardIdToMove={props.setCardIdToMove}
                 boards={props.boards}
-              />
+                moveCard={props.moveCard}
+                setOption={props.setOption}
+                setEdittingCard={props.setEdittingCard}
+                edittingCardId={props.edittingCardId}
+                setCardTitle={props.setCardTitle}
+                setCardDescription={props.setCardDescription}
+                saveEdit={props.saveEdit}/>
           </div>
           <span style={{height:'3px', display:'block', backgroundColor:'white', marginBottom: '10px'}}></span>
           <div style={{height:'6vh'}}>

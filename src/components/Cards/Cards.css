@@ -4,6 +4,6 @@
 .functions{
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 50%;
+    grid-template-columns: auto;
     grid-column-gap: 2px;
 }
