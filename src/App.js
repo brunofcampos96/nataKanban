@@ -171,7 +171,7 @@ class App extends Component {
   
   addBoard(){
     let board = {
-      id: this.state.boards[this.state.boards.length-1].id + 1,
+      id: this.state.boards.length + 1,
       title: "Edit",
       color: this.getRandomColor()
     }
@@ -180,7 +180,7 @@ class App extends Component {
   }
   addCard = (pId) => {
     let card = {
-      id: this.state.cards[this.state.cards.length-1].id + 1,
+      id: this.state.cards.length+1,
       pId: pId,
       title: "Edit",
       description: "Edit"
