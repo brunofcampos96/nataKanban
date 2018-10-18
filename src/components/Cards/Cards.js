@@ -56,6 +56,7 @@ const cards = (props) => {
           {moveOption}
           {edittingCard}
           <button style={cardButtonStyle} onClick={() => props.deleteCard(card.id)}>Delete</button>
+          <button style={cardButtonStyle} onClick={() => props.moveCardDown(card)}>Move Down</button>
         </div>
         {showOptions}
         {title}

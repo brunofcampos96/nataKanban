@@ -43,7 +43,7 @@ const boards = (props) => {
         return <div style={{backgroundColor:board.color}}>
           <div
               id={board.id}
-              style={{height:'70vh'}}
+              style={{height:'70vh', overflow: 'auto'}}
             >
               {title}
               <span style={{height:'3px', display:'block', backgroundColor:'white'}}></span>
@@ -61,7 +61,8 @@ const boards = (props) => {
                 edittingCardId={props.edittingCardId}
                 setCardTitle={props.setCardTitle}
                 setCardDescription={props.setCardDescription}
-                saveEdit={props.saveEdit}/>
+                saveEdit={props.saveEdit}
+                moveCardDown={props.moveCardDown}/>
           </div>
           <span style={{height:'3px', display:'block', backgroundColor:'white', marginBottom: '10px'}}></span>
           <div style={{height:'6vh'}}>

@@ -108,7 +108,8 @@ class App extends Component {
             edittingCardId={this.state.edittingCard}
             setCardTitle={this.setCardTitle}
             setCardDescription={this.setCardDescription}
-            saveEdit={this.saveEdit}/>
+            saveEdit={this.saveEdit}
+            moveCardDown={this.moveCardDown}/>
         </div>
       </div>
     );
@@ -136,6 +137,20 @@ class App extends Component {
   
   setCardDescription = (description) => {
     this.setState({cardDescription: description})
+  }
+
+  moveCardDown = (cardToMove) => {
+    let cards = [...this.state.cards];
+    let boardCards = cards.filter(card => card.pId === cardToMove.pId);
+    let cardIdx = boardCards.findIndex(boardCard => boardCard.id === cardToMove.id);
+    let cardsToMerge = cards.filter(card => card.pId !== cardToMove.pId);
+    if(boardCards.length > 1 && boardCards[cardIdx + 1]){
+      let cardToChange = boardCards[cardIdx + 1];
+      boardCards[cardIdx] = cardToChange;
+      boardCards[cardIdx+1] = cardToMove;
+      let finalCards = cardsToMerge.concat(boardCards);
+      this.setState({cards:finalCards});
+    }
   }
   
   saveEdit = (editCard) => {
@@ -180,7 +195,7 @@ class App extends Component {
   }
   addCard = (pId) => {
     let card = {
-      id: this.state.cards.length+1,
+      id: this.state.cards.length + 1,
       pId: pId,
       title: "Edit",
       description: "Edit"
